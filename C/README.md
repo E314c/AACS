@@ -8,7 +8,7 @@ It is also _not_ designed to be maximally performant: I have not combined operat
 Again, this is for demonstration and educational purposes.
 
 ## Where's the unit tests?
-I'm really sorry, but I haven't found any decent examples of _how to actually unit test in C_. I found [some]() [frameworks]() [that]() [Stackoverflow]() [mentions](), but I couldn't figure out how to create tests suites like I would in other languages.
+I'm really sorry, but I haven't found any decent examples of _how to actually unit test in C_. I found [some](https://libcheck.github.io/check/) [frameworks](http://aceunit.sourceforge.net/) [that](http://autounit.tigris.org/) [Stackoverflow](https://stackoverflow.com/questions/65820/unit-testing-c-code) [mentions](https://cmocka.org/), but I couldn't figure out how to create tests suites like I would in other languages.
 
 If you'd like to help suggest a framework and maybe write up the tests for even _one_ of the C files then I'll look into and fill out the rest of the tests.
 

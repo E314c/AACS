@@ -25,7 +25,6 @@ void mixCol_1a(byte *block, byte *mixer) {
     // mixColumns:
     // for each column:
     for (x = 0; x < BLOCK_ROW_SIZE; x++) {
-        //
         for (y = 0; y < BLOCK_ROW_SIZE; y++) {
             block[x + (4 * y)] = gfMultiplyAndSum(block_copy + (x * 4), mixer + (4 * y), BLOCK_ROW_SIZE);
         }

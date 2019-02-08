@@ -18,8 +18,10 @@ int main(void){
         0x16, 0xa6, 0x88, 0x3c
     };
 
-    printf_block(testBlock, "pre");
+    printf_block(testBlock, "plain");
     aes_encode_block(testBlock, key);
-    printf_block(testBlock, "post");
-
+    printf_block(testBlock, "cipher");
+    aes_decode_block(testBlock, key);
+    printf_block(testBlock, "plain");
 }
+
