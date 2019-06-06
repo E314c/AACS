@@ -7,6 +7,9 @@ It's primary goal is to be a __readable__ implementation of AACS to help people 
 It is also _not_ designed to be maximally performant: I have not combined operations, nor made use of memory swapping techniques for the key scheduler.
 Again, this is for demonstration and educational purposes.
 
+## How do I build this?
+- [ ] TODO : create a Make script (or other) for this repo ;)
+
 ## Where's the unit tests?
 I'm really sorry, but I haven't found any decent examples of _how to actually unit test in C_. I found [some](https://libcheck.github.io/check/) [frameworks](http://aceunit.sourceforge.net/) [that](http://autounit.tigris.org/) [Stackoverflow](https://stackoverflow.com/questions/65820/unit-testing-c-code) [mentions](https://cmocka.org/), but I couldn't figure out how to create tests suites like I would in other languages.
 

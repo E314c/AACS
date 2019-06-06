@@ -14,18 +14,9 @@ void transposeMatrix(byte *matrix, unsigned char row_size) {
         for (y = skip; y < row_size; y++) {
 
             // swap the values:
-            /*/
-            // full function is ((pos%row_size*)row_size) + (pos/row_size))
-            // y is already pos%row_size, x is already (pos/row_size)
-            #define SWAP_VAR ((y * row_size) + x)
-            temp = matrix[y + (x * row_size)];
-            matrix[y + (x * row_size)] = matrix[SWAP_VAR];
-            matrix[SWAP_VAR] = temp;
-            /*/
             temp = matrix[getIndexFromXY(x, y, BLOCK_ROW_SIZE)];
             matrix[getIndexFromXY(x, y, BLOCK_ROW_SIZE)] = matrix[getIndexFromXY(y, x, BLOCK_ROW_SIZE)];
             matrix[getIndexFromXY(y, x, BLOCK_ROW_SIZE)] = temp;
-            //*/
         }
         skip++; // increase the skip for next row.
     }
