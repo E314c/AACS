@@ -20,7 +20,16 @@ keyStruct keyToKeyStruct(block key) {
     return newStruct;
 }
 
+void _transposeBlocks(block dataBlock, block key){
+    // The AES specification states input data is stream in columwise
+    // So we need to transpose the data:
+    transposeMatrix(dataBlock, BLOCK_ROW_SIZE);
+    transposeMatrix(key, BLOCK_ROW_SIZE);
+}
+
 int aes_encode_block(block dataBlock, block key) {
+
+    _transposeBlocks(dataBlock, key);
 
     keyStruct encryptionKey = keyToKeyStruct(key);
 
@@ -31,7 +40,6 @@ int aes_encode_block(block dataBlock, block key) {
     
     // Other rounds
     for(uint aesRound = 1; aesRound <= AES_ROUNDS; aesRound ++ ) {
-
 
         // get new key for round
         encryptionKey = getNextKey(encryptionKey);
@@ -51,10 +59,16 @@ int aes_encode_block(block dataBlock, block key) {
             dataBlock[i] ^= encryptionKey.keyBlock[i];
         }
     }
+    
+    // Need to re-transpose block to columnwise array output
+    _transposeBlocks(dataBlock, key);
 
     return 0;
 }
 int aes_decode_block(block dataBlock, block key) {
+    // The AES specification states input data is stream in columwise
+    // So we need to transpose the data:
+    _transposeBlocks(dataBlock, key);
 
     keyStruct encryptionKey = keyToKeyStruct(key);
 
@@ -91,12 +105,17 @@ int aes_decode_block(block dataBlock, block key) {
         }
     }
 
+    // Need to re-transpose block to columnwise array output
+    _transposeBlocks(dataBlock, key);
+
     return 0;
 };
 
 int aes_encode(block data, uint dataLength, block key, aes_block_mode mode) {
     
 };
+
 int aes_deocde(block data, uint dataLength, block key, aes_block_mode mode) {
 
 };
+
