@@ -2,8 +2,8 @@
 #define AACS_CRYPTO_PRIMITIVES_H 1
     #include "../common/common.h"
     /* Function primitives */
-    int aes_128E(block data, block key);
-    int aes_128D(block data, block key);
+    int aes_128E(block data, block key, block cipherDestination);
+    int aes_128D(block data, block key, block plainTextDestination);
 
     int aes_128CBCE(block data, uint dataLength, block key);
     int aes_128CBCD(block data, uint dataLength, block key);

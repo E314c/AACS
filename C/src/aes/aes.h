@@ -15,6 +15,6 @@
     /* Function Prototypes */
     int aes_encode(block data, uint dataLength, block key, aes_block_mode mode);
     int aes_deocde(block data, uint dataLength, block key, aes_block_mode mode);
-    int aes_encode_block(block dataBlock, block key);
-    int aes_decode_block(block dataBlock, block key);
+    int aes_encode_block(block dataBlock, block key, block cipherDestination);
+    int aes_decode_block(block dataBlock, block key, block plainTextDestination);
 #endif
