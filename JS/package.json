@@ -4,7 +4,8 @@
   "description": "a demonstration implementation of AACS in JS",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha ./src/**/*.spec.js"
+    "test": "mocha ./src/**/*.spec.js",
+    "generateTrees": "node ./src/tools/generateTreeToFile.js"
   },
   "keywords": [
     "aacs",
