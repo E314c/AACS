@@ -3,6 +3,14 @@
  * It will print out node data in a JSON-parsable format.
  */
 
+const path = require('path');
+const fs = require('fs');
+const SystemConfig = require('../system-config');
+const { SYSTEM_TREE_DEPTH: defaultSystemTreeDepth } = require('../system-config/defaults')();
+const { generateTree } = require('../subset-difference-tree/deviceKeys');
+
+
+// CLI Options
 const args = require('yargs')
     .option('output', {
         alias: 'o',
@@ -11,7 +19,7 @@ const args = require('yargs')
     })
     .option('depth', {
         alias: 'd',
-        default: 5,
+        default: defaultSystemTreeDepth,
         description: 'The depth of master tree',
     })
     .option('no-clean', {
@@ -20,10 +28,10 @@ const args = require('yargs')
     })
     .help().argv;
 
-const path = require('path');
-const fs = require('fs');
-const { generateTree } = require('../subset-difference-tree/deviceKeys');
 console.log(`Runtime options: ${JSON.stringify(args, null, 2)}`);
+
+// Set the system's tree depth
+SystemConfig.SYSTEM_TREE_DEPTH = args.depth;
 
 // -- Create tree root keys -- //
 // TODO: use input keys / random key generation?

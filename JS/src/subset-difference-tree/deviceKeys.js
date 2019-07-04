@@ -5,7 +5,6 @@
 const { aes_128D } = require('../aacs-crypto-primitives');
 const Node = require('./node');
 
-//TODO
 const AES_G3_INIT_STATE = Buffer.from([
     0x7B, 0x10, 0x3C, 0x5D, 
     0xCB, 0x08, 0xC4, 0xE5, 

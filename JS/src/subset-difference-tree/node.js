@@ -1,4 +1,4 @@
-const SYSTEM_TREE_DEPTH = 5; //TODO: get from system config
+const SystemConfig = require('../system-config');
 
 class Node {
     /**
@@ -14,8 +14,8 @@ class Node {
 
         // Derive useful values
         this.nodeKey = Buffer.from(this.nodeKeyHex, 'hex');
-        this.uMask = ''.padStart(treeDepth, '1').padEnd(SYSTEM_TREE_DEPTH + 1, '0');
-        this.uvNumber = `${path}1`.padEnd(SYSTEM_TREE_DEPTH + 1, '0');
+        this.uMask = ''.padStart(treeDepth, '1').padEnd(SystemConfig.SYSTEM_TREE_DEPTH + 1, '0');
+        this.uvNumber = `${path}1`.padEnd(SystemConfig.SYSTEM_TREE_DEPTH + 1, '0');
     }
 
     /**
