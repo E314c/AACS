@@ -72,14 +72,14 @@ function generateTree(rootKey, depth, depthFromMasterRoot, initialPath='') {
             tree.push(new Node('', depthFromMasterRoot,rootKey.toString('hex')));
         }
 
-        const {right, left} = aes_g3(rootKey);
-        const rightNode = new Node(`${initialPath}0`, depthFromMasterRoot, right.toString('hex'));
-        const leftNode = new Node(`${initialPath}1`, depthFromMasterRoot, left.toString('hex'));
+        const {left, right} = aes_g3(rootKey);
+        const leftNode = new Node(`${initialPath}0`, depthFromMasterRoot, left.toString('hex'));
+        const rightNode = new Node(`${initialPath}1`, depthFromMasterRoot, right.toString('hex'));
         return tree.concat([
             rightNode,
             leftNode,
-            ...generateTree(left, depth - 1, depthFromMasterRoot, `${initialPath}0`), 
-            ...generateTree(right, depth - 1, depthFromMasterRoot, `${initialPath}1`)
+            ...generateTree(left, depth - 1, depthFromMasterRoot, leftNode.path), 
+            ...generateTree(right, depth - 1, depthFromMasterRoot, rightNode.path),
         ]);
     } else {
         return [];
