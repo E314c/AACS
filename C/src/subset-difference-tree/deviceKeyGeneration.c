@@ -20,7 +20,6 @@ void xorBuffers(byte *dest, byte *xor, uint length) {
 block aes_g3(block deviceKey, block leftChild, block rightChild, block processingKey) {
     byte state[16] = AES_G3_INIT_STATE_AS_BYTES;
     byte temp[16];
-    printf_block(state, "state");
 
     // Left
     aes_128D(state, deviceKey, leftChild);

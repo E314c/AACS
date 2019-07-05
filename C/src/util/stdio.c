@@ -22,6 +22,12 @@ void byteArrayToHexString(byte *array, uint length) {
     for(int i = 0; i < length; i++) {
         printf("%2x ", array[i]);
     }
-    printf("\n");
 }
 
+void print_compare_blocks(byte *block, char *name, byte *block_2, char *name_2) {
+    printf("%s:\n",name);
+    byteArrayToHexString(block, BLOCK_SIZE);
+    printf("\n%s:\n",name_2);
+    byteArrayToHexString(block_2, BLOCK_SIZE);
+    printf("\n");
+}
