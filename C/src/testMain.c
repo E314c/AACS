@@ -1,9 +1,9 @@
 // Testing file, just thrown into directories to test files
 #include <stdio.h>
-#include "../util/stdio.h"
-#include "../util/matrix.h"
-#include "aes.h"
-#include "../subset-difference-tree/deviceKeyGeneration.h"
+#include "./util/stdio.h"
+#include "./util/matrix.h"
+#include "./subset-difference-tree/deviceKeyGeneration.h"
+#include "./aes/aes.h"
 
 void testAesG3() {
     byte L[16];
@@ -93,11 +93,48 @@ void testAnimationAesEncryption() {
     printf_block(result, "plain");
 }
 
+void testDeviceKeyGeneration() {
+    // From Personally generated examples
+    byte root[16] = {
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00
+    };
+    byte left[16] = {
+        0x5f, 0x20, 0x0c, 0x36, 
+        0x0e, 0x4f, 0xac, 0x6a, 
+        0x34, 0xb7, 0x83, 0xa0, 
+        0x7d, 0xae, 0x2d, 0x65
+    };
+    byte right[16] = {
+        0xc7, 0x57, 0x7d, 0xa9, 
+        0xf4, 0x86, 0xc0, 0xd5, 
+        0xcd, 0xc8, 0xfc, 0x06, 
+        0x80, 0xf3, 0x52, 0x18
+    };
+
+    byte resultLeft[16];
+    byte resultRight[16];
+    byte resultPk[16];
+
+    aes_g3(root, resultLeft, resultRight, resultPk);
+
+    printf_block(left, "ExpectedLeft");
+    printf_block(resultLeft, "ActualLeft");
+    printf_block(right, "ExpectedRight");
+    printf_block(resultRight, "ActualRight");
+
+    // FIXME: Result is backwards: Check spec for path definition, check tree generator for correct path assigning and check C implementation for correct mapping of left/right
+} 
+
 int main(void){
 
-    testFipsEncrypt();
-    printf("\n---------\n");
-    testAnimationAesEncryption();
-    printf("\n---------\n");
-    testAesG3();
+    // testFipsEncrypt();
+    // printf("\n---------\n");
+    // testAnimationAesEncryption();
+    // printf("\n---------\n");
+    // testAesG3();
+    // printf("\n---------\n");
+    testDeviceKeyGeneration();
 }
