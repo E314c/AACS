@@ -9,6 +9,7 @@
 #include "./shiftRows.h"
 
 #include "../util/debug.h"
+#include "../util/matrix.h"
 
 keyStruct keyToKeyStruct(block key) {
     // Create key struct:
@@ -125,6 +126,7 @@ int aes_decode_block(block dataBlock, block key, block plainTextDestination) {
     return 0;
 };
 
+#if 0  // TODO: Implement if necessary?
 int aes_encode(block data, uint dataLength, block key, aes_block_mode mode) {
     // TODO: Possible not useful for this project, but useful for reference?
 };
@@ -132,4 +134,4 @@ int aes_encode(block data, uint dataLength, block key, aes_block_mode mode) {
 int aes_deocde(block data, uint dataLength, block key, aes_block_mode mode) {
     // TODO: Possible not useful for this project, but useful for reference?
 };
-
+#endif

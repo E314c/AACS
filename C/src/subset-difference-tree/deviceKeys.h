@@ -6,6 +6,10 @@
 
 typedef struct {
     uint u_mask;
-    uint uv;
+    NodePath uv;
     byte key[16];
 } deviceKey;
+
+int addDeviceKey(deviceKey newDeviceKey);
+void clearKeys();
+deviceKey* findMatchingDeviceKey(NodePath uv, NodePath u_mask);

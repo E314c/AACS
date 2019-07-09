@@ -5,4 +5,9 @@
     #include "./project-types.h"
 
     #include <stdio.h>
+
+    // The Maximum possible tree depth is 31 as device number is stored in 31 bits
+    #define DEVICE_KEY_TREE_DEPTH_MAX 31
+    // Can be swapped out as appropriate
+    #define DEVICE_KEY_TREE_DEPTH DEVICE_KEY_TREE_DEPTH_MAX
 #endif
