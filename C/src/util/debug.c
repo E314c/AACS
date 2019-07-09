@@ -1,5 +1,6 @@
-#include "./debug.h"
 #include <stdarg.h>
+#include <stdio.h>
+#include "./debug.h"
 
 debug_levels debug_level = BUILD_DEFAULT_DEBUG_LEVEL;
 

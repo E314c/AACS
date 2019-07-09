@@ -5,6 +5,7 @@
 #include "./util/matrix.h"
 #include "./subset-difference-tree/deviceKeyGeneration.h"
 #include "./subset-difference-tree/pathNavigation.h"
+#include "./subset-difference-tree/deviceKeys.h"
 #include "./aes/aes.h"
 
 int testFipsEncrypt() {
@@ -172,15 +173,81 @@ int test_isNodeInSubset() {
             if (!tests[i + 3]){
                 strcpy(not," not");
             }
-            printf("Node 0x%2x should%s be a subset of um: 0x%2x uv: 0x%2x\n", tests[i + 2], not, tests[i + 1], tests[i]);
+            printf("Node 0x%2x should%s be a subset of u_mask: 0x%2x uv: 0x%2x\n", tests[i + 2], not, tests[i + 1], tests[i]);
             failures++;
         }
     }
-
+    return failures;
 }
 
-    int
-    main(void) {
+uint test_findMatchingDeviceKey() {
+    printf("Testing findMatchingDeviceKey()\n"); 
+    uint failures = 0;
+    // Clear keys
+    clearKeys();
+    
+    // Add example keys for a device on path 0x 0000 0001
+    deviceKey first = { // tree depth n-7: 
+        0xFFFFFF80,     // uint u_mask;
+        0x00000078,     // NodePath uv;
+        { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0 }// byte key[16];
+    };
+    addDeviceKey(first);
+    deviceKey second = { // tree depth n-7
+        0xFFFFFF80,     // uint u_mask;
+        0x00000073, // NodePath uv;
+        { 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1 }// byte key[16];
+    };
+    addDeviceKey(second);
+
+    deviceKey third = { // tree depth n-3
+        0xFFFFFFF8,     // uint u_mask;
+        0x00000006, // NodePath uv;
+        { 2,2,2,2, 2,2,2,2, 2,2,2,2, 2,2,2,2 }// byte key[16];
+    };
+    addDeviceKey(third);
+
+
+    // -- Tests --//
+
+    // Node: Third key should be valid
+    NodePath test1_uv = 0x00000005; // 03 is child of 06 (xxxx x101 is child of xxxx x110)
+    NodePath test1_uMask = 0xFFFFFFF8;
+    deviceKey *result = findMatchingDeviceKey(test1_uv, test1_uMask);
+    if(result == NULL || result->uv != third.uv || result->key[0] != 2) {
+        failures++;
+        if(result == NULL) {
+            printf("Could not find matching key for test 1\n");
+        } else  {
+            printf("Expected third key to match, but got %d key\n", result->key[0]);
+        }
+    }
+
+    // No Valid key: none match u mask
+    NodePath test2_uv = 0x00000005;
+    NodePath test2_uMask = 0xFFFFFFFC;  // No correct tree
+    result = findMatchingDeviceKey(test2_uv, test2_uMask);
+    if(result != NULL) {
+        failures++;
+        
+        printf("Expected no key to match due to u_mask, but got %d key\n", result->key[0]);
+    }
+
+    // No valid key: none valid for uv
+    NodePath test3_uv = 0x00000002; // on the path to 0x0000 0001
+    NodePath test3_uMask = 0xFFFFFF80;
+    result = findMatchingDeviceKey(test3_uv, test3_uMask);
+    if(result != NULL) {
+        failures++;
+        
+        printf("Expected no key to match due to being on the device path, but got %d key\n", result->key[0]);
+    }
+
+
+    return failures;
+}
+
+int main(void) {
 
     uint failures = 0;
 
@@ -192,5 +259,8 @@ int test_isNodeInSubset() {
     printf("\n---------\n");
     test_isNodeInSubset();
     printf("\n---------\n");
+    test_findMatchingDeviceKey();
+    printf("\n---------\n");
     printf("Test results: %d failures\n", failures);
+    return failures;
 }
