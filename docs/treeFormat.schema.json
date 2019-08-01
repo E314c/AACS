@@ -1,0 +1,27 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "path": {
+                "type": "string",
+                "description": "The path from master root to this node, in binary",
+                "pattern": "^[01]+$"
+            },
+            "treeDepth": {
+                "type": "number",
+                "description": "The depth at which this tree begins, relative to the master root. (Is also the number of 1's at the beginning of the u mask)"
+            },
+            "nodeKey": {
+                "type": "string",
+                "description": "A Hex representation of the node's 'deviceKey', used to calculate it's Processing Key and left/right subsiduary keys",
+                "pattern": "^(0x)?[0-9a-f]+$"
+            }
+        },
+        "required": [
+            "path",
+            "nodeKey",
+            "treeDepth"
+        ]
+    }
+}

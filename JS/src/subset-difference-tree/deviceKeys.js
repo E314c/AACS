@@ -4,6 +4,7 @@
 
 const { aes_128D } = require('../aacs-crypto-primitives');
 const Node = require('./node');
+const SystemConfig = require('../system-config');
 
 const AES_G3_INIT_STATE = Buffer.from([
     0x7B, 0x10, 0x3C, 0x5D, 
@@ -85,9 +86,80 @@ function generateTree(rootKey, depth, depthFromMasterRoot, initialPath='') {
         return [];
     }
 }
-//*/
+
+/**
+ * @param {number} uv 
+ * @returns {number} The V mask from the UV number
+ */
+function vMaskFromUv(uv) {
+    let vMask = ~(0);
+    while ((uv & ~vMask) == 0) vMask <<= 1;
+    return vMask;
+}
+
+/**
+ * Determine if a node is part of a given subset
+ * @param {Node} node the node being evaluated
+ * @param {number} subsetUMask The U mask for the subset (the depth of the tree against the root)
+ * @param {number} subsetUv the UV number of the subset (the path in this tree which is excluded)
+ * @returns {boolean}
+ */
+function isNodeInSubset(node, subsetUMask, subsetUv) {
+    const deviceNodeNumber = node.uvNumber;
+    const vMask = vMaskFromUv(subsetUv);
+    return (deviceNodeNumber & subsetUMask) === (subsetUv & subsetUMask)    // Is in the subset under node u
+        &&
+        (deviceNodeNumber & v_mask) != (subsetUv & vMask)    // Is not part of the subset under node v
+}
+
+/**
+ * Validate if this device key can be used to determine the final processing key to unlock a media key.
+ * @param {number} keyUv 
+ * @param {number} keyUMask 
+ * @param {number} subsetUv 
+ * @param {number} subsetUMask 
+ * @returns {boolean}
+ */
+function isCorrectDeviceKey(keyUv, keyUMask, subsetUv, subsetUMask) {
+    const keyVMask = vMaskFromUv(keyUv);
+
+    return (subsetUMask === keyUMask) // the amount of higher bits that must match
+        && ((subsetUv & keyVMask) === (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
+}
+
+
+/*/
+NodePath vMaskFromUv(NodePath uv) {
+    NodePath v_mask = ~(0);
+    while ((uv & ~v_mask) == 0) v_mask <<= 1;
+
+    return v_mask;
+}
+
+int isNodeInSubset(NodePath deviceNodeNumber, NodePath uv, NodePath u_mask) {
+    NodePath v_mask = vMaskFromUv(uv);
+
+    return (
+        (deviceNodeNumber & u_mask) == (uv & u_mask)    // Is in the subset under node u
+        &&
+        (deviceNodeNumber & v_mask) != (uv & v_mask)    // Is not part of the subset under node v
+    );
+}
+
+int isCorrectDeviceKey(NodePath keyUv, NodePath keyUMask, NodePath subsetUv, NodePath subsetUMask) {
+    logger(INFO, "Checking %x %x \nagainst %x %x\n", keyUv, keyUMask, subsetUv, subsetUMask);
+    NodePath keyVMask = vMaskFromUv(keyUv);
+
+    return (subsetUMask == keyUMask) // the amount of higher bits that must match
+        && ((subsetUv & keyVMask) == (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
+}
+/*/
+
 
 
 module.exports = {
-    generateTree
+    generateTree,
+    isNodeInSubset,
+    isCorrectDeviceKey,
 }
+
