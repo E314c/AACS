@@ -5,8 +5,8 @@
         "properties": {
             "path": {
                 "type": "string",
-                "description": "The path from master root to this node, in binary",
-                "pattern": "^[01]+$"
+                "description": "The path from master root to this node, in binary. Empty for the top root key",
+                "pattern": "^[01]*$"
             },
             "treeDepth": {
                 "type": "number",

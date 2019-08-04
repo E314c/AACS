@@ -6,6 +6,7 @@ The file is designed to be JSON parsable, but is also simple enough that a basic
 
 
 ## The Format
+[./treeFormat.schema.json](./treeFormat.schema.json)
 ```JSON
 {
     "type": "array",
