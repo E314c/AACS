@@ -26,7 +26,7 @@ class Node {
      */
     toJSON() {
         return {
-            nodeKey : this.nodeKeyHex,
+            nodeKey: this.nodeKey_hex,
             path: this.path,
             treeDepth: this.treeDepth,
         }

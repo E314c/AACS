@@ -52,7 +52,7 @@ const args = require('yargs')
     .option('encrypt-with', {
         alias: 'e',
         type: 'array',
-        description: 'Nodes to encrypt the MKB with. In format `[TreeDepth],[nodePath]`', // These are the values with the lowest bit of the path set to '1'
+        description: 'Nodes to encrypt the MKB with. In format `[TreeDepth],[nodePath]`', // The TreeDepth is 0 indexed
         demand: true,
     })
     /*/
@@ -85,7 +85,6 @@ SystemConfig.SYSTEM_TREE_DEPTH = SystemTree_JSON.reduce((max, node) => Math.max(
 
 // Map it into Nodes
 const SystemTree = SystemTree_JSON
-    // .map(x => {console.log(`Loading: ${JSON.stringify(x)}`); return x;})
     .map(({ path, treeDepth, nodeKey }) => new Node(path, treeDepth, nodeKey));
 
 
@@ -108,7 +107,7 @@ const encryptionKeys = args["encrypt-with"].reduce((acc, argString)=> {
         throw new SyntaxError(`Path ${path} (derived from ${JSON.stringify(argString)}) should represent a binary string`);
     }
     if(path.length <= treeDepth) {
-        throw new Error(`Can not specify a path ${path} at a treeDepth of ${treeDepth}: Path must be longer than the tree depth`);
+        throw new Error(`Can not specify a path ${JSON.stringify(path)} at a treeDepth of ${treeDepth}: Path must be longer than the tree depth`);
     }
     if(path.length > SystemConfig.SYSTEM_TREE_DEPTH) {
         throw new Error(`Path ${path} for ${JSON.stringify(argString)} is longer than system tree depth: ${SystemConfig.SYSTEM_TREE_DEPTH}`);
