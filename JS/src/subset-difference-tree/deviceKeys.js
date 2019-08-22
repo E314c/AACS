@@ -98,21 +98,6 @@ function vMaskFromUv(uv) {
 }
 
 /**
- * Determine if a node is part of a given subset
- * @param {Node} node the node being evaluated
- * @param {number} subsetUMask The U mask for the subset (the depth of the tree against the root)
- * @param {number} subsetUv the UV number of the subset (the path in this tree which is excluded)
- * @returns {boolean}
- */
-function isNodeInSubset(node, subsetUMask, subsetUv) {
-    const deviceNodeNumber = node.uvNumber;
-    const vMask = vMaskFromUv(subsetUv);
-    return (deviceNodeNumber & subsetUMask) === (subsetUv & subsetUMask)    // Is in the subset under node u
-        &&
-        (deviceNodeNumber & v_mask) != (subsetUv & vMask)    // Is not part of the subset under node v
-}
-
-/**
  * Validate if this device key can be used to determine the final processing key to unlock a media key.
  * @param {number} keyUv 
  * @param {number} keyUMask 
@@ -129,7 +114,6 @@ function isCorrectDeviceKey(keyUv, keyUMask, subsetUv, subsetUMask) {
 
 module.exports = {
     generateTree,
-    isNodeInSubset,
     isCorrectDeviceKey,
     aes_g3,
 };
