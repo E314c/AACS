@@ -1,0 +1,32 @@
+[
+  {
+    "nodeKey": "5f200c360e4fac6a34b783a07dae2d65",
+    "path": "1",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "c2e40a83ba8e4c54c6776e54910a7df9",
+    "path": "01",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "9cfd105e71843603d633c6f8d9073be6",
+    "path": "000",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "63979c20b67ffb6c56698bc05dc63958",
+    "path": "01",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "925091c779e5eb73b064dba647652ee1",
+    "path": "000",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "d45ea56d20d634b80d32b905d3dcf248",
+    "path": "000",
+    "treeDepth": 2
+  }
+]

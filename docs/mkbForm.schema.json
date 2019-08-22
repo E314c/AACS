@@ -4,12 +4,14 @@
         "type": "object",
         "properties": {
             "u_mask": {
-                "type": "number",
-                "description": "The U mask of the MediaKeyBlock entry"
+                "type": "string",
+                "description": "The U mask of the MediaKeyBlock entry. Binary format",
+                "pattern": "^[01]*$"
             },
             "uv_number": {
-                "type": "number",
-                "description": "The UV number of the MediaKeyBlock entry"
+                "type": "string",
+                "description": "The UV number of the MediaKeyBlock entry. Binary format",
+                "pattern": "^[01]*$"
             },
             "mediaKeyData": {
                 "type": "string",

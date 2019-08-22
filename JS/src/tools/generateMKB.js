@@ -16,6 +16,7 @@ const ajv = new (require('ajv'))({
 });
 const SystemConfig = require('../system-config');
 const Node = require('../subset-difference-tree/node');
+const { aes_g3 } = require('../subset-difference-tree/deviceKeys');
 const {aes_128E} = require('../aacs-crypto-primitives');
 
 // Maybe this file shoudl be symlinked in the project folder so I don't go out of the `/JS/` directory?
@@ -134,9 +135,12 @@ const MediaKeyBlock = encryptionKeys.map((encryptionNode) => {
     if(!nodeKey) {
         throw new Error(`Matching node for ${JSON.stringify(encryptionNode)} did not contain a key: ${JSON.stringify(matchingNodes[0])}`)
     }
+    // Generate processing key:
+    const { processingKey } = aes_g3(nodeKey);
+
 
     // Encrypt the value and return an MKB entry
-    const encryptedBuffer = aes_128E(args["media-key"], nodeKey);
+    const encryptedBuffer = aes_128E(args["media-key"], processingKey);
 
     return {
         u_mask: uMask_str,

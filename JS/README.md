@@ -1,11 +1,35 @@
 # AACS in JS
 
+## Main
+```
+ node src/main.js 
+Options:
+  --version                 Show version number                        [boolean]
+  --device-tree, -i         The subset tree with all keys for the device. Should
+                            be in the TreeFormat                      [required]
+  --media-key-block, -m     The media key block to be checked. Should be in the
+                            mkbForm                                   [required]
+  --device-node-number, -n  The device's node number. Enables pre-check of node
+                            revocation and verification of supplied device keys
+  --help                    Show help                                  [boolean]
+```
+The main program allows you to supply a set of device keys and an MediaKeyBlock record, which the system then uses to determine if it can retreieve a media key.
+You can use the examples given in the repository root under `/examples` to verify the code.
+
+Running the Depth3 example with keys for device 000, presenting it with the MKB that revokes 010, 011, 101.
+```sh
+node src/main.js -i ../examples/Depth3/Tree-3.000.json -m ../examples/Depth3/MKB.010,011,101.json 
+```
+Running the Depth3 example with keys for device 000, presenting it with the MKB that revokes 000 and 001.
+```sh
+node src/main.js -i ../examples/Depth3/Tree-3.000.json -m ../examples/Depth3/MKB.000,001.json 
+```
+
 
 ## Tools
 ### `JS/src/tools/generateTreeToFile.js`
 This script will help you to generate a set of keys, either for an entire AACS system or for a particular device within that system.
 
-###
 ```
 $ node src/tools/generateTreeToFile.js --help
 Options:

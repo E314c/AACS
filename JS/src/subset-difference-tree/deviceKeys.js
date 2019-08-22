@@ -127,39 +127,10 @@ function isCorrectDeviceKey(keyUv, keyUMask, subsetUv, subsetUMask) {
         && ((subsetUv & keyVMask) === (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
 }
 
-
-/*/
-NodePath vMaskFromUv(NodePath uv) {
-    NodePath v_mask = ~(0);
-    while ((uv & ~v_mask) == 0) v_mask <<= 1;
-
-    return v_mask;
-}
-
-int isNodeInSubset(NodePath deviceNodeNumber, NodePath uv, NodePath u_mask) {
-    NodePath v_mask = vMaskFromUv(uv);
-
-    return (
-        (deviceNodeNumber & u_mask) == (uv & u_mask)    // Is in the subset under node u
-        &&
-        (deviceNodeNumber & v_mask) != (uv & v_mask)    // Is not part of the subset under node v
-    );
-}
-
-int isCorrectDeviceKey(NodePath keyUv, NodePath keyUMask, NodePath subsetUv, NodePath subsetUMask) {
-    logger(INFO, "Checking %x %x \nagainst %x %x\n", keyUv, keyUMask, subsetUv, subsetUMask);
-    NodePath keyVMask = vMaskFromUv(keyUv);
-
-    return (subsetUMask == keyUMask) // the amount of higher bits that must match
-        && ((subsetUv & keyVMask) == (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
-}
-/*/
-
-
-
 module.exports = {
     generateTree,
     isNodeInSubset,
     isCorrectDeviceKey,
-}
+    aes_g3,
+};
 
