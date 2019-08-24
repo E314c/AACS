@@ -1,0 +1,207 @@
+[
+  {
+    "nodeKey": "00000000000000000000000000000000",
+    "path": "",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "5f200c360e4fac6a34b783a07dae2d65",
+    "path": "1",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "c7577da9f486c0d5cdc8fc0680f35218",
+    "path": "0",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "c2e40a83ba8e4c54c6776e54910a7df9",
+    "path": "01",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "c7df37973419e0f0af1c669493284ecc",
+    "path": "00",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "a1f348e24dd1975c96e871bca3145fa6",
+    "path": "001",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "9cfd105e71843603d633c6f8d9073be6",
+    "path": "000",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "8fc8ff159ff76b63759c288f351fff48",
+    "path": "011",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "9751e7b287dfa477479755d2bdbbcdb8",
+    "path": "010",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "9d1092dfbead963367795253d25216b8",
+    "path": "11",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "fc28170a4eb27c637f3fdb00de793288",
+    "path": "10",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "a8a4490fa633e5977ca6140583f86f34",
+    "path": "101",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "a75ff166fd8657d5a7b1b2eb70b015e3",
+    "path": "100",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "89bbe8b2e530b8e7416823a447c53df5",
+    "path": "111",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "003a0843dcdb1bfef0df58ef2711289f",
+    "path": "110",
+    "treeDepth": 0
+  },
+  {
+    "nodeKey": "89f4e78ade9e21d19b5b6bfb4bc6a7f4",
+    "path": "1",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "52ff2a26e92a696e300c6ab852ec82da",
+    "path": "0",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "63979c20b67ffb6c56698bc05dc63958",
+    "path": "01",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "5b64c65c377f425893a3405d7493b0aa",
+    "path": "00",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "2b25f6f64c1ff64aee0e4459fb0db841",
+    "path": "001",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "925091c779e5eb73b064dba647652ee1",
+    "path": "000",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "6d4ed48e29b06fe901525b50148dbce7",
+    "path": "011",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "45ea05ef76b91943d2a3420c865b4b68",
+    "path": "010",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "9ce71fe4e3219ea29732fba7b8152d12",
+    "path": "11",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "02c8e17bba874be8fe8deb4ac19a81a0",
+    "path": "10",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "e5f83f0dab1c85f9b68110b76d5dc02a",
+    "path": "101",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "c8b25d540027131494a4c9d27ee2109f",
+    "path": "100",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "07ee2cdeea68c48752805ad77a16286c",
+    "path": "111",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "22be6af3d18b949a7d3bf3f873c87770",
+    "path": "110",
+    "treeDepth": 1
+  },
+  {
+    "nodeKey": "ef1fa99e9c13795a27bf8c19d85c49a1",
+    "path": "01",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "5782e661c7c1b9a938f56941ac5e4269",
+    "path": "00",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "925c3fb78590b191b2f2fd474448d205",
+    "path": "001",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "d45ea56d20d634b80d32b905d3dcf248",
+    "path": "000",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "c2db465dac0b09146505443c4da507a6",
+    "path": "011",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "c24190ecfd6cedb9678ccd0110766502",
+    "path": "010",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "6f52b093cabac9e8b5dfe80125332d1b",
+    "path": "11",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "f81471211c3ceee53623655c767a1d0e",
+    "path": "10",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "ae069bd75f8f2bd4ce3a54549a2074d2",
+    "path": "101",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "769e3d6c0863d7d51ebc2a63779d328f",
+    "path": "100",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "36d3baf16f3240dbcd0f4669705572bf",
+    "path": "111",
+    "treeDepth": 2
+  },
+  {
+    "nodeKey": "05a5ed913afbed3b24b8572a3ac781b8",
+    "path": "110",
+    "treeDepth": 2
+  }
+]

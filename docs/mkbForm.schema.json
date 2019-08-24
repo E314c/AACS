@@ -1,0 +1,22 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "u_mask": {
+                "type": "string",
+                "description": "The U mask of the MediaKeyBlock entry. Binary format",
+                "pattern": "^[01]*$"
+            },
+            "uv_number": {
+                "type": "string",
+                "description": "The UV number of the MediaKeyBlock entry. Binary format",
+                "pattern": "^[01]*$"
+            },
+            "mediaKeyData": {
+                "type": "string",
+                "description": "A hex representation of the encrypted media key. In the spec this is stored in a separate list with an index matching the subsetDifference list, but is included here for consiseness"
+            }
+        }
+    }
+}

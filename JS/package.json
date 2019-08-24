@@ -1,0 +1,26 @@
+{
+  "name": "aacs-demo",
+  "version": "1.0.0",
+  "description": "a demonstration implementation of AACS in JS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha ./src/**/*.spec.js",
+    "generateTrees": "node ./src/tools/generateTreeToFile.js"
+  },
+  "keywords": [
+    "aacs",
+    "demo",
+    "example",
+    "crypto"
+  ],
+  "author": "E314c",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  },
+  "dependencies": {
+    "ajv": "^6.10.1",
+    "yargs": "^13.2.4"
+  }
+}
