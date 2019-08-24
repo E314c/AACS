@@ -4,7 +4,6 @@
 
 const { aes_128D } = require('../aacs-crypto-primitives');
 const Node = require('./node');
-const SystemConfig = require('../system-config');
 
 const AES_G3_INIT_STATE = Buffer.from([
     0x7B, 0x10, 0x3C, 0x5D, 
@@ -98,22 +97,48 @@ function vMaskFromUv(uv) {
 }
 
 /**
- * Validate if this device key can be used to determine the final processing key to unlock a media key.
- * @param {number} keyUv 
- * @param {number} keyUMask 
- * @param {number} subsetUv 
- * @param {number} subsetUMask 
+ * Determine if a node is part of a given subset
+ * @param {number} devicePath the path to the device.
+ * @param {number} subsetUMask The U mask for the subset (the depth of the tree against the root)
+ * @param {number} subsetUv the UV number of the subset (the path in this tree which is excluded)
  * @returns {boolean}
  */
-function isCorrectDeviceKey(keyUv, keyUMask, subsetUv, subsetUMask) {
+function isDeviceInSubset(devicePath, subsetUMask, subsetUv) {
+    const vMask = vMaskFromUv(subsetUv);
+    return (devicePath & subsetUMask) === (subsetUv & subsetUMask)    // Is in the subset under node u
+        &&
+        (devicePath & vMask) !== (subsetUv & vMask)    // Is not part of the subset under node v
+}
+
+/**
+ * Validate if this device key can be used to determine the final processing key to unlock a media key.
+ * Will return true if keyNode is the matching targetNode, or a parent of it.
+ * @param {number} keyUv The UV of the system key being tested
+ * @param {number} keyUMask The u mask of the system key being tested
+ * @param {number} targetNodeUv the UV of the targetNode
+ * @param {number} targetNodeUMask the U mask of the targetNode
+ * @returns {boolean} whether this system key is a parent of the targetNode
+ */
+function isCorrectDeviceKey(keyUv, keyUMask, targetNodeUv, targetNodeUMask) {
     const keyVMask = vMaskFromUv(keyUv);
 
-    return (subsetUMask === keyUMask) // the amount of higher bits that must match
-        && ((subsetUv & keyVMask) === (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
+    //*/
+    // Here I check that the targetNode is lower than the keyNode.
+    // This is not part of the spec, but It's necessary (?) to catch test cases like keyUV: 0110, targetUV: 0100
+    // The keyVMask is '1100', which results in key:01xx comparing to target: 01xx
+    const targetVMask = vMaskFromUv(targetNodeUv);
+    if (keyVMask & ~targetVMask) {
+        return false
+    }
+    //*/
+
+    return (targetNodeUMask === keyUMask) // are at the same tree depth
+        && ((targetNodeUv & keyVMask) === (keyUv & keyVMask));   // The relevant paths match (keyUv will match against itself and all subsiduary keys)
 }
 
 module.exports = {
     generateTree,
+    isDeviceInSubset,
     isCorrectDeviceKey,
     aes_g3,
 };

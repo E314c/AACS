@@ -1,4 +1,5 @@
 const SystemConfig = require('../system-config');
+const { b2i } = require('../util/binary');
 
 class Node {
     /**
@@ -15,9 +16,9 @@ class Node {
         // Derive useful values
         this.nodeKey = this.nodeKey_hex ? Buffer.from(this.nodeKey_hex, 'hex') : null;
         this.uMask_str = ''.padStart(treeDepth, '1').padEnd(SystemConfig.SYSTEM_TREE_DEPTH + 1, '0');
-        this.uMask = Number.parseInt(this.uMask_str,2);
+        this.uMask = b2i(this.uMask_str);
         this.uvNumber_str = `${path}1`.padEnd(SystemConfig.SYSTEM_TREE_DEPTH + 1, '0');
-        this.uvNumber = Number.parseInt(this.uvNumber_str, 2);
+        this.uvNumber = b2i(this.uvNumber_str);
     }
 
     /**

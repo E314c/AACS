@@ -1,3 +1,6 @@
+const SystemConfig = require('../system-config');
+const { b2i } = require('../util/binary');
+
 class MkbEntry {
     /**
      * 
@@ -6,14 +9,14 @@ class MkbEntry {
      * @param {string} mediaKeyData a hex string representation of the encryptedm media key
      */
     constructor(uMask_str, uvNumber_str, mediaKeyData) {
-        this.uvNumber_str = uvNumber_str;
-        this.uMask_str = uMask_str;
+        this.uvNumber_str = uvNumber_str.padEnd(SystemConfig.SYSTEM_TREE_DEPTH + 1, '0');
+        this.uMask_str = uMask_str.padStart(SystemConfig.SYSTEM_TREE_DEPTH + 1, '1');
         this.mediaKeyData_hex = mediaKeyData.replace(/^0x/, '');    // strip any hex indicator
 
         // Derive useful values
         this.mediaKeyData = this.mediaKeyData_hex ? Buffer.from(this.mediaKeyData_hex, 'hex') : null;
-        this.uMask = Number.parseInt(this.uMask_str,2);
-        this.uvNumber = Number.parseInt(this.uvNumber_str, 2);
+        this.uMask = b2i(this.uMask_str);
+        this.uvNumber = b2i(this.uvNumber_str);
     }
 
     /**

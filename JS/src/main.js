@@ -3,7 +3,7 @@ const fs = require('fs');
 const ajv = new (require('ajv'))();
 const SystemConfig = require('./system-config');
 const deviceKeyStore = require('./subset-difference-tree/deviceKeyStore');
-const { aes_g3, generateTree, isCorrectDeviceKey } = require('./subset-difference-tree/deviceKeys');
+const { aes_g3, generateTree, isCorrectDeviceKey, isDeviceInSubset } = require('./subset-difference-tree/deviceKeys');
 const { aes_128D } = require('./aacs-crypto-primitives');
 const Node = require('../src/subset-difference-tree/node');
 const MkbEntry = require('../src/subset-difference-tree/mkbEntry');
@@ -25,7 +25,15 @@ const args = require('yargs')
     })
     .option('device-node-number', {
         alias: 'n',
-        description: 'The device\'s node number. Enables pre-check of node revocation and verification of supplied device keys',
+        description: 'The device\'s node number (without trailing set bit). Enables pre-check of node revocation and verification of supplied device keys',
+        coerce: val => {
+            // Validate the path is a binary string
+            if (/^[01]+$/.test(val)) {
+                return val;
+            } else {
+                throw new TypeError('Device-node-number must be a binary string');
+            }
+        },
     })
     .help().argv;
 
@@ -63,10 +71,14 @@ const deviceKeys = deviceKeys_JSON
 const mkb = mkb_json.map(({ u_mask, uv_number, mediaKeyData }) => new MkbEntry(u_mask, uv_number, mediaKeyData));
 
 if (args["device-node-number"]) {
-    // TODO: Perform check if node exists in any MKB subsets (and warn if not).
-
+    const deviceNodeNumber = args["device-node-number"];
+    // Perform check if node exists in any MKB subsets (and warn if not).
+    if(!mkb.some(mkbEntry => isDeviceInSubset(deviceNodeNumber, mkbEntry.uMask, mkbEntry.uvNumber))) {
+        console.log(`Preliminary check says that device ${deviceNodeNumber.toString(2)} will be unable to decode any MKB entry`);
+    }
 
     // TODO: Verify that all expected keys are present.
+
 }
 
 // Add keys to system: 
@@ -87,21 +99,19 @@ if(decryptableEntryIndex === -1) {
 const decryptableEntry = mkb[decryptableEntryIndex];
 console.info(`Decrypting entry ${decryptableEntryIndex}: ${JSON.stringify(decryptableEntry)}`);
 
-// TODO: Retreive the MK and print
+// Retreive the MK and print
 let deviceNodeKey = deviceKeyStore.getValidDeviceNodeForSubset(decryptableEntry.uvNumber, decryptableEntry.uMask);
+console.log(`Deriving the key, starting with ${JSON.stringify(deviceNodeKey)}, umask:${deviceNodeKey.uMask_str} uv: ${deviceNodeKey.uvNumber_str}`)
 while(deviceNodeKey.uvNumber !== decryptableEntry.uvNumber) {   // we should already have matching u_masks, no need to check again.
     // Not the final processing key, need to derive child keys:
-    /*/
-    const childKeys = aes_g3(deviceNodeKey.nodeKey);
-    /*/
+    const prevPath = deviceNodeKey.path;
     const subTree = generateTree(deviceNodeKey.nodeKey, 1, deviceNodeKey.treeDepth, deviceNodeKey.path);
-    //*/
-    
+
     // Find a match:
     deviceNodeKey = subTree.find(node => isCorrectDeviceKey(node.uvNumber, node.uMask, decryptableEntry.uvNumber, decryptableEntry.uMask));
 
     if (!deviceNodeKey) {
-        throw new Error(`Failed to derive the next device key from ${deviceNodeKey.path}`);
+        throw new Error(`Failed to derive the next device key from ${prevPath}`);
     }
 
 }
@@ -111,7 +121,7 @@ const { processingKey } = aes_g3(deviceNodeKey.nodeKey);
 
 console.info('Derived processing key is ', processingKey.toString('hex'));
 
-// TODO: Decrypt the MKB record:
+// Decrypt the MKB record:
 const mediaKey = aes_128D(decryptableEntry.mediaKeyData, processingKey);
 
 console.log('Decrypted media key is ', mediaKey.toString('hex'));

@@ -41,7 +41,7 @@ const args = require('yargs')
                 const padded = val.padStart(32, '0'); // pad to 16 bytes (which in hex is 32 chars)
                 return Buffer.from(padded, 'hex');
             } else {
-                throw new TypeError('Meida key must be a hex string of 1-32 hex characters (will be padded left to 16 bytes)');
+                throw new TypeError('Media key must be a hex string of 1-32 hex characters (will be padded left to 16 bytes)');
             }
         },
     })
@@ -113,7 +113,6 @@ const encryptionKeys = args["encrypt-with"].reduce((acc, argString)=> {
     if(path.length > SystemConfig.SYSTEM_TREE_DEPTH) {
         throw new Error(`Path ${path} for ${JSON.stringify(argString)} is longer than system tree depth: ${SystemConfig.SYSTEM_TREE_DEPTH}`);
     }
-
 
     return acc.concat({
         treeDepth,

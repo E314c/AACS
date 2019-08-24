@@ -32,7 +32,7 @@ function loadKeysFromFile(filePath) {
 }
 
 /**
- * @param {Node} node 
+ * @param {Node} node The node to be added to the system keys
  */
 function addKeyToSystem(node) {
     for(let exisitingNode of DEVICE_KEYS) {
@@ -45,9 +45,10 @@ function addKeyToSystem(node) {
 }
 
 /**
- * Get the 
- * @param {number} uv 
- * @param {number} uMask 
+ * Get the Device key from which you can derive the processing key
+ * @param {number} uv the uv number of the MKB entry
+ * @param {number} uMask the uMask of the MKB entry
+ * @returns {Node|null} Returns a the Node to begin derivation from, else null
  */
 function getValidDeviceNodeForSubset(uv, uMask) {
     for (let node of DEVICE_KEYS) {
